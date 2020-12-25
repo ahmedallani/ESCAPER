@@ -1,23 +1,42 @@
-const { error } = require('console');
-var express = require('express');
-var router = express.Router();
-const   {Blogs} =require("../db/Models/blogs.models")
 
+var express = require("express");
+var {
+  findBlogs,
+  createBlog,
+  update,
+  deleteBlog  
+} = require("../db/Models/blogs.models");
 
-router.post("/add",(req,res)=>{
-  Blogs.create(req.body)
-    .then((res)=>{
-      res.send(result);
-      res.end();
-    })
-    .catch((error)=>{
-      res.send(error)
-    });
-});
-router.delete("/api/delete/blogs/:id",(req,res)=>{
-  Blogs.deleteOne({_id: req.params._id},(error,docs) =>{
-    res.send(docs);
-    res.end()
+const router = express.Router();
+//GET.
+router.route("/").get(function(req,res){
+  findBlogs((err,data) => {
+    if (err) throw err;
+  res.send(data);
+})
+})
+//POST.
+router.route("/").post(function(req,res){
+  console.log(req.body);
+  createBlog((err,data)=>{
+  if (err) throw err;
+res.send(data);
   });
+});
+// UPDATE.
+router.route("/").put(function(req,res){
+console.log(req.body);
+update(req.body,(err,data) =>{
+  if(err) throw err;
+res.send(data);
+  });
+});
+// DELETE.
+router.route("/").delete((req,res) => {
+console.log(req.params.id);
+deleteBlog(req.params.id,(err,data) =>{
+  if(err) throw err;
+  res.send(data);
+});
 });
 module.exports = router;

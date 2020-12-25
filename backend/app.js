@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/api/blog", blogs);
+app.use("/api/blogs", blogs);
 app.use("/api", authRouter);
 
 // catch 404 and forward to error handler
