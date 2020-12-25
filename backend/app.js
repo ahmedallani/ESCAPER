@@ -7,10 +7,12 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var authRouter = require("./routes/authentication");
+const blogs = require("./routes/blogs");
 var app = express();
 
+
 mongoose.connect(
-  "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/Escaper?retryWrites=true&w=majority",
+  "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/escaper",
   { useNewUrlParser: true, useUnifiedTopology: true },
   {
     useMongoClient: true
@@ -31,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use("/api/blog", blogs);
 app.use("/api", authRouter);
 
 // catch 404 and forward to error handler
@@ -49,5 +51,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
+app.listen(3000,()=>{console.log('app listening at http://localhost:3000')})
 module.exports = app;
