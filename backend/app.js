@@ -1,13 +1,24 @@
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var authRouter = require("./routes/authentication");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const passport = require('passport');
+  
+// const initializePassport = require('./passport-config')
+// initializePassport(passport, email => {
+//   return users.find(user => user.email === email)
+// })
+
 var app = express();
+// const expressSession = require('express-session')({
+//   secret: 'secret',
+//   resave: false,
+//   saveUninitialized: false
+// });
 
 mongoose.connect(
   "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/Escaper?retryWrites=true&w=majority",
@@ -31,8 +42,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/api", authRouter);
+// app.use(expressSession);
+//  app.use("/api", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
