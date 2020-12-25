@@ -14,6 +14,7 @@ export class ServiceService {
   };
   constructor(private http: HttpClient) {}
   public createBlog(blog: any): Observable<any> {
+    console.log('hello')
     return this.http.post('http://localhost:3000/add', blog, this.httpOptions);
   }
 }
