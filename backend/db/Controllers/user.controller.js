@@ -1,4 +1,4 @@
-const UserModel = require("../models/user.model");
+const UserModel = require("../Models/user.model");
 // to verify each time if the id's are existing in our database
 const ObjectID = require("mongoose").Types.ObjectId;
 
