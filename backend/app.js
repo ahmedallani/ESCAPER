@@ -6,12 +6,11 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const passport = require('passport');
-  
-// const initializePassport = require('./passport-config')
-// initializePassport(passport, email => {
-//   return users.find(user => user.email === email)
-// })
+//const passport = require('passport');
+//var authRouter = require("./routes/authentication");
+const blogs = require("./routes/blogs");
+const users = require("./routes/user.routes");
+const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 
 var app = express();
 // const expressSession = require('express-session')({
@@ -19,17 +18,30 @@ var app = express();
 //   resave: false,
 //   saveUninitialized: false
 // });
+// const initializePassport = require('./passport-config')
+// initializePassport(passport, email => {
+//   return users.find(user => user.email === email)
+// })
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  allowedHeaders: ["sessionId", "Content-Type"],
+  exposedMethods: ["sessionId"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false
+};
+app.use(cors(corsOptions));
 
-mongoose.connect(
-  "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/Escaper?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  {
-    useMongoClient: true
-  }
-);
-mongoose.connection
-  .once("open", () => console.log("Connected to the database!"))
-  .on("error", (err) => console.log("Error", err));
+// mongoose.connect(
+//   "mongodb+srv://+process.env.DB_USER_PASS +Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/escaper",
+//   { useNewUrlParser: true, useUnifiedTopology: true },
+//   {
+//     useMongoClient: true
+//   }
+// );
+// mongoose.connection
+//   .once("open", () => console.log("Connected to the database!"))
+//   .on("error", (err) => console.log("Error", err));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -42,8 +54,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
 // app.use(expressSession);
 //  app.use("/api", authRouter);
+app.use(checkUser);
+app.get("/jwtid", requireAuth, (req, res) => {
+  res.status(200).send(res.locals.user._id);
+});
+//routes
+app.use("/api/blog", blogs);
+app.use("api/user", users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -60,5 +80,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
+app.listen(3000, () => {
+  console.log("app listening at http://localhost:3000");
+});
 module.exports = app;
