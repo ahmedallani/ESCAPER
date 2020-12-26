@@ -42,7 +42,7 @@ const mongoose = require("mongoose");
 //     useNewUrlParser: true
 //   }
 // );
-mongoose.connect('mongodb://localhost/test', {
+mongoose.connect('mongodb://localhost/test20', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
