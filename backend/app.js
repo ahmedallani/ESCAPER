@@ -33,15 +33,19 @@ app.use(cors(corsOptions));
 require("dotenv").config();
 const mongoose = require("mongoose");
 //protect our data we remove the name of our database and password and we change it with process ... inside .env
-mongoose.connect(
-  // "mongodb://localhost/test2",
-  "mongodb+srv://" +
-    process.env.DB_USER_PASS +
-    "@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true
-  }
-);
+// mongoose.connect(
+//   // "mongodb://localhost/test2",
+//   "mongodb+srv://" +
+//     process.env.DB_USER_PASS +
+//     "@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
+//   {
+//     useNewUrlParser: true
+//   }
+// );
+mongoose.connect('mongodb://localhost/test', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
