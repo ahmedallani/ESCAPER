@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const createError = require("http-errors");
@@ -31,18 +30,25 @@ const corsOptions = {
   preflightContinue: false
 };
 app.use(cors(corsOptions));
-
-// mongoose.connect(
-//   "mongodb+srv://+process.env.DB_USER_PASS +Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/escaper",
-//   { useNewUrlParser: true, useUnifiedTopology: true },
-//   {
-//     useMongoClient: true
-//   }
-// );
-// mongoose.connection
-//   .once("open", () => console.log("Connected to the database!"))
-//   .on("error", (err) => console.log("Error", err));
-
+require("dotenv").config();
+const mongoose = require("mongoose");
+//protect our data we remove the name of our database and password and we change it with process ... inside .env
+mongoose.connect(
+  // "mongodb://localhost/test2",
+  "mongodb+srv://" +
+    process.env.DB_USER_PASS +
+    "@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true
+  }
+);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("connected");
+});
+// "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/escaper"
+//mongodb+srv://dhiadhafer:dhia123@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -50,8 +56,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -63,7 +69,7 @@ app.get("/jwtid", requireAuth, (req, res) => {
 });
 //routes
 app.use("/api/blog", blogs);
-app.use("api/user", users);
+app.use("/api/user", users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

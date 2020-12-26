@@ -8,15 +8,16 @@ const createToken = (id) => {
     expiresIn: maxAge
   });
 };
-
+//console.log(process.env.TOKEN_SECRET);
 module.exports.signUp = async (req, res) => {
-  console.log(req.body);
-  const { firstName, lastName, email, password } = req.body;
+  console.log("body, ", req.body);
+  const { firstName, lastName, email, phoneNumber, password } = req.body;
   try {
     const user = await UserModel.create({
       firstName,
       lastName,
       email,
+      phoneNumber,
       password
     });
     res.status(201).json({ user: user._id });

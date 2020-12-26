@@ -6,9 +6,8 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    minLength: 3,
+    minLength: 5,
     maxLength: 40,
-    unique: true,
     trim: true
   },
   lastName: {
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 3,
     maxLength: 40,
-    unique: true,
     trim: true
   },
   email: {
@@ -31,28 +29,29 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    max: 1030, // we fix a longest length for password for crypting it
+    max: 500, // we fix a longest length for password for crypting it
     minLength: 6
   }
 });
 
-// userSchema.pre("save", async function (next) {
-//   const salt = await bcrypt.genSalt();
-//   this.password = await bcrypt.hash(this.password, salt);
-//   next();
-// });
+userSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-// userSchema.statics.login = async function (email, password) {
-//   const user = await this.findOne({ email })    
-//   if (user) {
-//     const auth = await bcrypt.compare(password, user.password);
-//     if (auth) {
-//       return user;
-//     }
-//     throw Error("incorrect password");
-//   }
-//   throw Error("incorrect email");
-// };
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error("incorrect password");
+  }
+  throw Error("incorrect email");
+};
+
 const UserModel = mongoose.model("user", userSchema);
 
-module.exports.UserModel = UserModel;
+module.exports = UserModel;

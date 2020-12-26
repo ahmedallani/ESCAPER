@@ -7,8 +7,8 @@ module.exports.getAllUsers = async (req, res) => {
   // select() to select all the propyoritise except password
   const users = await UserModel.find().select('-password');
   res.status(200).json(users);
-
 };
+
 module.exports.userInfo = (req,res) => {
   console.log(req.params);
   // the function is valid will test if the id existe on the data base if not it will exit the function
