@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const authController = require("../db/controllers/auth.controller");
-const userController = require("../db/controllers/user.controller");
+const authController = require("../db/Controllers/auth.controller");
+const userController = require("../db/Controllers/user.controller");
 const error = require("../utils/errors.utils");
 
 // const multer =require('multer')
