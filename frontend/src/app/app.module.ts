@@ -19,8 +19,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import { HomeComponent } from './home/home.component';
+import { TestComponent } from './test/test.component';
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+
+
 @NgModule({
-  declarations: [AppComponent, AddBlogComponent, DisplayBlogsComponent, EventComponent, AppointmentComponent, AppointmentListComponent],
+  declarations: [SignupComponent,LoginComponent,UserComponent,HomeComponent,AppComponent, AddBlogComponent, DisplayBlogsComponent, EventComponent, AppointmentComponent, AppointmentListComponent],
   imports: [HttpClientModule,BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule,MatTableModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
@@ -29,7 +36,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
