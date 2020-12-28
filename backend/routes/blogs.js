@@ -1,4 +1,17 @@
 var express = require("express");
+var multer = require("multer");
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    console.log(file);
+    cb(null, file.originalname);
+  }
+});
+var upload = multer({ storage });
+
 var {
   findblogs,
   createblog,
@@ -8,27 +21,28 @@ var {
 
 const router = express.Router();
 //GET.
-router.route("/").get(function (req, res) {
+router.get("/", function (req, res) {
   findblogs((err, data) => {
     if (err) throw err;
     res.send(data);
   });
 });
 //POST.
-router.route("/").post(function (req, res) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  console.log(req.body);
-  createblog(req.body, (err, data) => {
+
+router.post("/", upload.single("image"), function (req, res) {
+  const obj = {
+    title: req.body.title,
+    image: req.file.originalname,
+    Body: req.body.Body
+  };
+  console.log("obj", obj);
+  createblog(obj, (err, data) => {
     if (err) throw err;
     res.send(data);
   });
 });
 // UPDATE.
-router.route("/:id").put(function (req, res) {
+router.put("/:id", function (req, res) {
   console.log(req.body);
   update(req.body, (err, data) => {
     if (err) throw err;
@@ -36,7 +50,7 @@ router.route("/:id").put(function (req, res) {
   });
 });
 // DELETE.
-router.route("/:id").delete((req, res) => {
+router.delete("/:id", (req, res) => {
   console.log(req.params.id);
   deleteblog(req.params.id, (err, data) => {
     if (err) throw err;

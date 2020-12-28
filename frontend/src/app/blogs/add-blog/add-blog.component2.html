@@ -2,10 +2,10 @@
 <h2 style="text-align: center">add-blog</h2>
 <div class="form">
   <form
+   action="http://localhost:3000/api/blogs/"
     class="blog-form forms"
     enctype="multipart/form-data"
-    [formGroup]="blogForm"
-    (ngSubmit)="create()">
+    method="post">
     <input
     name="title"
     type="text"

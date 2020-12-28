@@ -6,7 +6,7 @@ var findblogs = function (callbacks) {
 };
 //Post.
 var createblog = function (obj, callbacks) {
-  debugger
+  debugger;
   const blog = new Blogs({
     title: obj.title,
     image: obj.image,

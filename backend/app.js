@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const cors = require("cors");
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
 const bodyParser = require("body-parser");
 var createError = require("http-errors");
 var express = require("express");
@@ -31,7 +33,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../frontend/dist/frontend")));
 app.use("/api/blogs", blogs);
 app.use("/api", authRouter);
 // catch 404 and forward to error handler

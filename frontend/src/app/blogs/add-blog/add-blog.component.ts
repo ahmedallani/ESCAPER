@@ -24,7 +24,9 @@ export class AddBlogComponent implements OnInit {
   create() {
     this.blog = this.blogForm.value;
     console.log(this.blog);
-    this.servise.createBlog(this.blog).subscribe((data) => {alert ("created blog")})
+    this.servise.createBlog(this.blog).subscribe((data) => {
+        console.log(data)
+       alert ("created blog")})
     }
 
   ngOnInit(): void {}
