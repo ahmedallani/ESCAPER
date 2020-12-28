@@ -11,16 +11,17 @@ export class AppointmentService {
   private BASE_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
+
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`${this.BASE_URL}`);
+    return this.http.get<Appointment[]>(`${this.BASE_URL}/api/appoinment`);
   }
 
   createAppointment(appointmentDate: string, numberOfPeople: number, place: string): Observable<Appointment> {
-    return this.http.post<Appointment>(`${this.BASE_URL}/post`, { appointmentDate, numberOfPeople, place });
+    return this.http.post<Appointment>(`${this.BASE_URL}/api/appoinment`, { appointmentDate, numberOfPeople, place });
   }
 
   cancelAppointment(id: string): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/${id}`);
+    return this.http.delete(`${this.BASE_URL}/api/appoinment/${id}`);
   }
 }
 

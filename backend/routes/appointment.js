@@ -9,7 +9,10 @@ Appointment.find({})
     .catch(error => res.send(error));
 });
 
-router.post('/post', (req, res, next) => {
+router.post('/', (req, res, next) => {
+  // res.header('Access-Control-Allow-Origin', '');
+  // res.header('Access-Control-Allow-Headers',
+  // "Origin , X-Requested-With,Content-Type,Accept");
   const { appointmentDate, numberOfPeople , place } = req.body;
   if (!appointmentDate || !numberOfPeople || !place) {
     return res.status(400).json({
