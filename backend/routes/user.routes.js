@@ -2,10 +2,7 @@ const router = require("express").Router();
 const authController = require("../db/Controllers/auth.controller");
 const userController = require("../db/Controllers/user.controller");
 const error = require("../utils/errors.utils");
-
-// const multer =require('multer')
-// const upload=multer()
-
+// authentication
 router.post("/register", authController.signUp);
 router.post("/login", authController.signIn);
 router.get("/logout", authController.logOut);

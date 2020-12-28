@@ -10,8 +10,8 @@ const createToken = (id) => {
 };
 //console.log(process.env.TOKEN_SECRET);
 module.exports.signUp = async (req, res) => {
-  console.log("body, ", req.body);
   const { firstName, lastName, email, phoneNumber, password } = req.body;
+  console.log("body, ", req.body);
   try {
     const user = await UserModel.create({
       firstName,
