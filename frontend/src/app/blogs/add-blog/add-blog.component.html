@@ -1,1 +1,32 @@
-<p>add-blog works!</p>
+<p>works!</p>
+<h2 style="text-align: center">add-blog</h2>
+<div class="form">
+  <form
+    class="blog-form forms"
+    [formGroup]="blogForm"
+    (ngSubmit)="create()">
+    <input
+    name="title"
+    type="text"
+    placeholder="title"
+    formControlName="title"
+  />
+  <input
+  name="image"
+  type="file"
+  placeholder="image"
+  formControlName="image"
+/>
+<input
+name="body"
+type="text"
+placeholder="body"
+formControlName="Body"
+/>
+<button>add your blog</button>
+<p class="message">
+  Already blog created?
+  <a class="blog create" href="#">create</a>
+</p>
+</form>
+</div>

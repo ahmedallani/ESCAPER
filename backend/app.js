@@ -10,9 +10,8 @@ var authRouter = require("./routes/authentication");
 const blogs = require("./routes/blogs");
 var app = express();
 
-
 mongoose.connect(
-  "mongodb+srv://Ahmedrbk:got14227378@cluster0.tlsqp.mongodb.net/escaper",
+  "mongodb+srv://dhiadhafer:dhia123@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   {
     useMongoClient: true
@@ -27,7 +26,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +34,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/blogs", blogs);
 app.use("/api", authRouter);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -51,5 +49,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-app.listen(3000,()=>{console.log('app listening at http://localhost:3000')})
+app.listen(3000, () => {
+  console.log("app listening at http://localhost:3000");
+});
 module.exports = app;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AddBlogService } from 'src/app/add-blog.service';
 
 @Component({
   selector: 'app-display-blogs',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./display-blogs.component.css']
 })
 export class DisplayBlogsComponent implements OnInit {
+blogs:any=[];
+  constructor(private servise:AddBlogService) { }
+ public deleteblog(id:any){
 
-  constructor() { }
+  this.servise.deleteblog(id).subscribe(data=>{
 
+    this.ngOnInit()
+  })
+ }
   ngOnInit(): void {
+    this.servise.displayBlogs().subscribe((data)=>{
+      this.blogs=data
+    })
   }
 
 }
