@@ -16,7 +16,7 @@ export class AddBlogService {
   constructor(private httclient: HttpClient) {}
   createBlog(b: any): Observable<any> {
     return this.httclient.post(
-      'http://localhost:3000/api/blogs/',
+      '/api/blogs/',
       b,
       this.httpOptions
     );
