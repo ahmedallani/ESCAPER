@@ -22,14 +22,7 @@
     "@angular/platform-browser": "~11.0.5",
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
-<<<<<<< HEAD
     "bcrypt": "^5.0.0",
-||||||| merged common ancestors
-=======
-    "@fortawesome/angular-fontawesome": "^0.8.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
->>>>>>> DhiaDhafer/main
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
