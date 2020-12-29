@@ -1,27 +1,63 @@
-const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var authRouter = require("./routes/authentication");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+//const passport = require('passport');
+//var authRouter = require("./routes/authentication");
 const blogs = require("./routes/blogs");
-const appointment = require("./routes/appointment")
-var app = express();
+const users = require("./routes/user.routes");
+const { checkUser, requireAuth } = require("./middleware/auth.middleware");
+const appointment = require("./routes/appointment");
 
+var app = express();
+// const expressSession = require('express-session')({
+//   secret: 'secret',
+//   resave: false,
+//   saveUninitialized: false
+// });
+// const initializePassport = require('./passport-config')
+// initializePassport(passport, email => {
+//   return users.find(user => user.email === email)
+// })
+
+app.use(cors());
+require("dotenv").config();
+const mongoose = require("mongoose");
+//protect our data we remove the name of our database and password and we change it with process ... inside .env
 
 mongoose.connect(
-  "mongodb+srv://dhiadhafer:dhia123@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  process.env.DB_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
   {
     useMongoClient: true
   }
 );
-mongoose.connection
-  .once("open", () => console.log("Connected to the database!"))
-  .on("error", (err) => console.log("Error", err));
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("connected");
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+// mongoose.connect(
+//   "mongodb+srv://dhiadhafer:dhia123@cluster0.4vcxr.mongodb.net/esciper?retryWrites=true&w=majority",
+//   { useNewUrlParser: true, useUnifiedTopology: true },
+//   {
+//     useMongoClient: true
+//   }
+// );
+// mongoose.connection
+//   .once("open", () => console.log("Connected to the database!"))
+//   .on("error", (err) => console.log("Error", err));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -29,15 +65,22 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(checkUser);
+app.get("/jwtid", requireAuth, (req, res) => {
+  res.status(200).send(res.locals.user._id);
+});
+//routes
 app.use("/api/blog", blogs);
-app.use("/api", authRouter);
-app.use("/api/appoinment" , appointment);
+app.use("/api/user", users);
+
+
+app.use("/api/appoinment", appointment);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -53,5 +96,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-app.listen(3000,()=>{console.log('app listening at http://localhost:3000')})
+app.listen(3000, () => {
+  console.log("app listening at http://localhost:3000");
+});
 module.exports = app;
