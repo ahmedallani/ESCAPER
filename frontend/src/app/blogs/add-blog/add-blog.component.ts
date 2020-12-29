@@ -39,8 +39,5 @@ export class AddBlogComponent implements OnInit {
       console.log(res);
     })
   }
-
- 
-
   ngOnInit(): void {}
 }

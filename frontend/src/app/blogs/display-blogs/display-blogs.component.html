@@ -2,8 +2,6 @@
 <div *ngFor="let blog of blogs">
   <p>{{blog.title}}</p><br/>
   <img [src]="'../../../assets/uploads/' + blog.image" />
-  <!-- <img src="../../../assets/nader.jpg" /> -->
-  <p>{{blog.image}}</p><br/>
   <p>{{blog.Body}}</p>
   <button (click)="deleteblog(blog._id)" style="background-color: red;">delete</button><br/><br/>
 </div>
