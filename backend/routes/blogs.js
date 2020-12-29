@@ -1,23 +1,61 @@
-const { error } = require('console');
-var express = require('express');
-var router = express.Router();
-const   {Blogs} =require("../db/Models/blogs.models")
+var express = require("express");
+var multer = require("multer");
 
-
-router.post("/add",(req,res)=>{
-  Blogs.create(req.body)
-    .then((res)=>{
-      res.send(result);
-      res.end();
-    })
-    .catch((error)=>{
-      res.send(error)
-    });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    
+    cb(null, "../frontend/src/assets/uploads/");
+  },
+  filename: function (req, file, cb) {
+    console.log(file);
+    cb(null, file.originalname);
+  }
 });
-router.delete("/api/delete/blogs/:id",(req,res)=>{
-  Blogs.deleteOne({_id: req.params._id},(error,docs) =>{
-    res.send(docs);
-    res.end()
+var upload = multer({ storage });
+
+var {
+  findblogs,
+  createblog,
+  update,
+  deleteblog
+} = require("../db/Controllers/blog.controller.js");
+
+const router = express.Router();
+//GET.
+router.get("/", function (req, res) {
+  findblogs((err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+//POST.
+
+router.post("/", upload.single("image"), function (req, res) {
+  const obj = {
+    title: req.body.title,
+    image: req.file.originalname,
+    Body: req.body.Body
+  };
+  console.log("obj", obj);
+  createblog(obj, (err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+// UPDATE.
+router.put("/:id", function (req, res) {
+  console.log(req.body);
+  update(req.body, (err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+// DELETE.
+router.delete("/:id", (req, res) => {
+  console.log(req.params.id);
+  deleteblog(req.params.id, (err, data) => {
+    if (err) throw err;
+    res.send(data);
   });
 });
 module.exports = router;

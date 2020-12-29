@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  onSave($event:any){
+    console.log("button is clicked!",$event)
+  }
   title = 'frontend';
 }

@@ -1,1 +1,7 @@
-<p>display-blogs works!</p>
+
+<div *ngFor="let blog of blogs">
+  <p>{{blog.title}}</p><br/>
+  <img [src]="'../../../assets/uploads/' + blog.image" />
+  <p>{{blog.Body}}</p>
+  <button (click)="deleteblog(blog._id)" style="background-color: red;">delete</button><br/><br/>
+</div>

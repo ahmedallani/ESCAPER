@@ -1,4 +1,6 @@
 const cors = require("cors");
+var multer  = require('multer');
+//var upload = multer({ dest: '../frontend/src/assets/uploads/' });
 const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");

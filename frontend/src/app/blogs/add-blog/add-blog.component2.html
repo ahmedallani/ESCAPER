@@ -1,0 +1,31 @@
+<p>works!</p>
+<h2 style="text-align: center">add-blog</h2>
+<div class="form">
+  <form
+   action="http://localhost:3000/api/blogs/"
+    class="blog-form forms"
+    enctype="multipart/form-data"
+    method="post">
+    <input
+    name="title"
+    type="text"
+    placeholder="title"
+    formControlName="title"
+  />
+  <input
+  name="image"
+  type="file"
+  placeholder="image"
+  formControlName="image"
+  />
+    <!-- #fileInput -->
+  <!-- <button (click)="fileInput.click()">Select File</button> -->
+<input
+name="body"
+type="text"
+placeholder="body"
+formControlName="Body"
+/><br/><br/>
+<button>add your blog</button>
+</form>
+</div>
