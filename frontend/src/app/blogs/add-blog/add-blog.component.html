@@ -29,11 +29,27 @@ formControlName="Body"
 </div> -->
 
 <h1>Add your blog</h1>
-<input type="file" (change)="onFileSlected($event)" />
-<input name="title" type="text" [(ngModel)]="title" placeholder="title" formControlName="title" />
-<input name="Body" type="text" [(ngModel)]="Body" placeholder="body" formControlName="Body" />
-<button type="button" (click)="onUpload()">Upload</button>
-<p>
-  <input type="text" [(ngModel)]="name"><br>
-  <strong>You said: </strong> {{ name }}
-</p>
+<div>
+  <form
+    class="register-form forms"
+    [formGroup]="myGroup"
+    (ngSubmit)="onUpload()"
+  >
+    <input type="file" (change)="onFileSlected($event)" />
+    <input
+      name="title"
+      type="text"
+      [(ngModel)]="title"
+      placeholder="title"
+      formControlName="title"
+    />
+    <input
+      name="Body"
+      type="text"
+      [(ngModel)]="Body"
+      placeholder="body"
+      formControlName="Body"
+    />
+    <button type="button" (click)="onUpload()">Upload</button>
+  </form>
+</div>
