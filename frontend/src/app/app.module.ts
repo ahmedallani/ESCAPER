@@ -19,6 +19,7 @@ import { from } from 'rxjs';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
+   
   ],
   providers: [],
   bootstrap: [AppComponent],

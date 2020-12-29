@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const cors = require("cors");
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+//var upload = multer({ dest: '../frontend/src/assets/uploads/' });
 const bodyParser = require("body-parser");
 var createError = require("http-errors");
 var express = require("express");
