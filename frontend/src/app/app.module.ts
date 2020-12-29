@@ -7,7 +7,7 @@ import { AddBlogComponent } from './blogs/add-blog/add-blog.component';
 import { DisplayBlogsComponent } from './blogs/display-blogs/display-blogs.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { EventComponent } from './event/event.component';
@@ -37,7 +37,7 @@ import { UserComponent } from './user/user.component';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatToolbarModule],
+    MatToolbarModule,ReactiveFormsModule],
     providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent],
 
