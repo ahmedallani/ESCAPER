@@ -7,6 +7,9 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import {CommonModule} from '@angular/common';
+import { AddBlogComponent } from './blogs/add-blog/add-blog.component';
+import { DisplayBlogsComponent } from './blogs/display-blogs/display-blogs.component';
+
 
 
 const routes: Routes = [
@@ -16,6 +19,8 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: "AddBlog", component:AddBlogComponent},
+  {path: "DisplayBlogs", component:DisplayBlogsComponent}
 
 ];
 @NgModule({
